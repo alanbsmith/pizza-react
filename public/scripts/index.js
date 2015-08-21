@@ -25,6 +25,7 @@ var Content = React.createClass({
       <div>
         <h1>hello world</h1>
         <SearchOptions handleSearchOption={this.setSearchOption} />
+        <h4>Search by: {this.state.searchBy}</h4>
         <SearchBar handleQuery={this.getLocations}/>
         <Thumbnail locations={this.state.locations} />
       </div>

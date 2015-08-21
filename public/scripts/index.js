@@ -1,14 +1,17 @@
 var Content = React.createClass({
   getInitialState: function() {
-    return{locations: [], query: ""}
+    return{locations: [], query: "", searchBy: "" }
   },
   setLocations: function(obj) {
     this.setState({locations: obj.loc})
   },
+  setSearchOption: function(obj) {
+    this.setState({searchBy: obj.searchBy})
+  },
   getLocations: function(data) {
     this.setState({query: data.query}, function() {
       $.ajax({
-        url: "http://localhost:9292/api/v1/properties/search?city=" + this.state.query,
+        url: "http://localhost:9292/api/v1/properties/search?" + this.state.searchBy + "=" + this.state.query,
         type: 'get',
         dataType: 'json',
         success: function(data) {
@@ -21,6 +24,8 @@ var Content = React.createClass({
     return (
       <div>
         <h1>hello world</h1>
+        <SearchOptions handleSearchOption={this.setSearchOption} />
+        <h4>Search by: {this.state.searchBy}</h4>
         <SearchBar handleQuery={this.getLocations}/>
         <Thumbnail locations={this.state.locations} />
       </div>
@@ -42,6 +47,30 @@ var SearchBar = React.createClass({
           <button className="btn btn-primary" type="submit" value='Post'>Search</button>
         </span>
       </form>
+    )
+  }
+});
+
+var SearchOptions = React.createClass({
+  handleCityClick: function(event) {
+    event.preventDefault();
+    this.props.handleSearchOption({searchBy: "city"})
+  },
+  handleAddressClick: function(event) {
+    event.preventDefault();
+    this.props.handleSearchOption({searchBy: "address"})
+  },
+  handlePizzeriaClick: function(event) {
+    event.preventDefault();
+    this.props.handleSearchOption({searchBy: "pizzeria"})
+  },
+  render: function() {
+    return (
+      <div className="buttons">
+        <button className="btn btn-primary" type="submit" value='Post' onClick={this.handleCityClick}>City</button>
+        <button className="btn btn-primary" type="submit" value='Post' onClick={this.handleAddressClick}>Address</button>
+        <button className="btn btn-primary" type="submit" value='Post' onClick={this.handlePizzeriaClick}>Pizzeria</button>
+      </div>
     )
   }
 });

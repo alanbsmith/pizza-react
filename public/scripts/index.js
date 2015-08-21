@@ -59,11 +59,16 @@ var SearchOptions = React.createClass({
     event.preventDefault();
     this.props.handleSearchOption({searchBy: "address"})
   },
+  handlePizzeriaClick: function(event) {
+    event.preventDefault();
+    this.props.handleSearchOption({searchBy: "pizzeria"})
+  },
   render: function() {
     return (
       <div className="buttons">
         <button className="btn btn-primary" type="submit" value='Post' onClick={this.handleCityClick}>City</button>
         <button className="btn btn-primary" type="submit" value='Post' onClick={this.handleAddressClick}>Address</button>
+        <button className="btn btn-primary" type="submit" value='Post' onClick={this.handlePizzeriaClick}>Pizzeria</button>
       </div>
     )
   }
